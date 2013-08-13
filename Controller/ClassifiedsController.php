@@ -7,6 +7,14 @@ App::uses('AppController', 'Controller');
  */
 class ClassifiedsController extends ClassifiedsAppController {
 
+/**
+ * Helpers
+ *
+ * @var array
+ */
+	//public $helpers = array('Media');
+	
+	public $uses = 'Classifieds.Classified';
 
 /**
  * index method
@@ -38,17 +46,18 @@ class ClassifiedsController extends ClassifiedsAppController {
  * @return void
  */
 	public function add() {
+		$this->view = "add_edit";
+		
 		if ($this->request->is('post')) {
+			
 			$this->Classified->create();
 			if ($this->Classified->save($this->request->data)) {
-				$this->Session->setFlash(__('The classified has been saved'));
+				$this->Session->setFlash(__('The Classified has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The classified could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The Classified could not be saved. Please, try again.'));
 			}
 		}
-		$creators = $this->Classified->Creator->find('list');
-		$this->set(compact('creators'));
 	}
 
 /**
@@ -58,6 +67,7 @@ class ClassifiedsController extends ClassifiedsAppController {
  * @return void
  */
 	public function edit($id = null) {
+		$this->view = "add_edit";
 		$this->Classified->id = $id;
 		if (!$this->Classified->exists()) {
 			throw new NotFoundException(__('Invalid classified'));
@@ -72,8 +82,6 @@ class ClassifiedsController extends ClassifiedsAppController {
 		} else {
 			$this->request->data = $this->Classified->read(null, $id);
 		}
-		$creators = $this->Classified->Creator->find('list');
-		$this->set(compact('creators'));
 	}
 
 /**
@@ -83,6 +91,7 @@ class ClassifiedsController extends ClassifiedsAppController {
  * @return void
  */
 	public function delete($id = null) {
+		
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}

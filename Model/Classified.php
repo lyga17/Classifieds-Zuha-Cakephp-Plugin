@@ -131,7 +131,7 @@ class Classified extends ClassifiedsAppModel {
  */
 	public $belongsTo = array(
 		'Creator' => array(
-			'className' => 'Creator',
+			'className' => 'Users.User',
 			'foreignKey' => 'creator_id',
 			'conditions' => '',
 			'fields' => '',
