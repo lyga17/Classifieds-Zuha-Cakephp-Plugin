@@ -1,5 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('ClassifiedsAppController', 'Classifieds.Controller');
 /**
  * Classifieds Controller
  *
