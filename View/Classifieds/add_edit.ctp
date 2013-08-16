@@ -2,7 +2,9 @@
 	
 	<?php echo $this->Form->create('Classifieds.Classified'); ?>
 	
-		<?php if(CakePlugin::loaded('Media')) { echo $this->Element('Media.media_selector', array('multiple' => false)); } ?>
+		<?php if(CakePlugin::loaded('Media')) { echo $this->Element('Media.media_selector', array('multiple' => true)); } ?>
+		
+		<?php if(isset($this->request->data['Classified']['id'])) {echo $this->Form->input('Classified.id'); } ?>
 		
 		<?php echo $this->Form->input('Classified.title', array('type' => 'text')); ?>
 		

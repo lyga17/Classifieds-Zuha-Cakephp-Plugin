@@ -6,6 +6,7 @@
 	<div class="row-fluid">
 		<div class="span3">
 			<h4><?php echo $classified['Classified']['title']; ?></h4>
+			<div class="image"><?php echo $this->Media->display($classified['Media'][0], array('width' => 150, 'height' => 150)); ?></div>
 			<p><?php echo $classified['Classified']['price']; ?></p>
 			<p><?php echo $classified['Classified']['description']; ?></p>
 			<p><?php echo $classified['Classified']['condition']; ?></p>

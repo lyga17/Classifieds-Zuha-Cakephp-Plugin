@@ -1,3 +1,5 @@
+<div class="image"><?php echo $this->Media->display($classified['Media'][0], array('width' => 150, 'height' => 150)); ?></div>   
+
 <div class="title"><?php echo $classified['Classified']['title']; ?></div>
 
 <div class="description"><?php echo $classified['Classified']['description']; ?></div>
