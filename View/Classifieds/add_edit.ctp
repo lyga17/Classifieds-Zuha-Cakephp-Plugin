@@ -4,6 +4,8 @@
 	
 		<?php if(CakePlugin::loaded('Media')) { echo $this->Element('Media.media_selector', array('multiple' => true)); } ?>
 		
+		<?php if(CakePlugin::loaded('Categories')) {echo $this->Form->checkbox('Category.Category',$categories);} ?>
+		
 		<?php if(isset($this->request->data['Classified']['id'])) {echo $this->Form->input('Classified.id'); } ?>
 		
 		<?php echo $this->Form->input('Classified.title', array('type' => 'text')); ?>

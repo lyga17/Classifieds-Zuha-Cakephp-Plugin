@@ -24,6 +24,9 @@ class ClassifiedsController extends ClassifiedsAppController {
 	public function index() {
 		$this->Classified->recursive = 0;
 		$this->set('classifieds', $this->paginate());
+		$this->set('Classifieds', $this->Classified->find('all', array(
+			'contain' => array('Category'),
+			)));
 	}
 
 /**
@@ -37,6 +40,7 @@ class ClassifiedsController extends ClassifiedsAppController {
 		if (!$this->Classified->exists()) {
 			throw new NotFoundException(__('Invalid classified'));
 		}
+		$this->Classified->contain(array('Category'));
 		$this->set('classified', $this->Classified->read(null, $id));
 	}
 
@@ -57,6 +61,8 @@ class ClassifiedsController extends ClassifiedsAppController {
 			} else {
 				$this->Session->setFlash(__('The Classified could not be saved. Please, try again.'));
 			}
+			$categories = $this->Phonebook->Category->find('list');
+			$this->set('categories',$categories);
 		}
 	}
 
@@ -81,6 +87,7 @@ class ClassifiedsController extends ClassifiedsAppController {
 			}
 		} else {
 			$this->request->data = $this->Classified->read(null, $id);
+			$this->set('categories',$categories);
 		}
 	}
 
