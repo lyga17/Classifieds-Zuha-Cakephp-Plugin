@@ -61,8 +61,10 @@ class ClassifiedsController extends ClassifiedsAppController {
 			} else {
 				$this->Session->setFlash(__('The Classified could not be saved. Please, try again.'));
 			}
-			$categories = $this->Phonebook->Category->find('list');
-			$this->set('categories',$categories);
+			
+			if(CakePlugin::loaded('Categories')) {
+				$this->set('categories', $this->Classified->Category->find('list', array('model' => 'Classified')));
+			}
 		}
 	}
 
@@ -87,7 +89,9 @@ class ClassifiedsController extends ClassifiedsAppController {
 			}
 		} else {
 			$this->request->data = $this->Classified->read(null, $id);
-			$this->set('categories',$categories);
+			if(CakePlugin::loaded('Categories')) {
+				$this->set('categories', $this->Classified->Category->find('list', array('conditions' => array('model' => 'Classified'))));
+			}
 		}
 	}
 
