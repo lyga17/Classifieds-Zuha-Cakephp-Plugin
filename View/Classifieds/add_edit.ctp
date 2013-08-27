@@ -10,9 +10,9 @@
 		
 		<?php echo $this->Form->input('Classified.description', array('type' => 'textarea')); ?>
 		
-		<?php echo $this->Form->input('Classified.posted_date', array('dateFormat' => 'Y-m-d H:i:s A', 'type' => 'text', 'class' => 'datetimepicker')); ?>
+		<?php echo $this->Form->input('Classified.posted_date', array('type' => 'datetimepicker')); ?>
 		
-		<?php echo $this->Form->input('Classified.expire_date', array('type' => 'text', 'class' => 'datetimepicker')); ?>
+		<?php echo $this->Form->input('Classified.expire_date', array('type' => 'datetimepicker')); ?>
 		
 		<?php if(CakePlugin::loaded('Categories')) {
 			echo $this->Form->label('Categories');	
