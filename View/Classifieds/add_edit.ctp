@@ -14,9 +14,11 @@
 		
 		<?php echo $this->Form->input('Classified.expire_date', array('type' => 'datetimepicker')); ?>
 		
-		<?php if(CakePlugin::loaded('Categories')) {
+		<?php
+		if (CakePlugin::loaded('Categories')) {
 			echo $this->Form->label('Categories');	
-			echo $this->Form->select('Category.Category',$categories, array('multiple' => 'checkbox'));} 
+			echo $this->Form->select('Category.Category',$categories, array('multiple' => 'checkbox', 'limit' => 3));
+		}
 		?>
 		
 		<?php echo $this->Form->input('Classified.condition', array('type' => 'text')); ?>
