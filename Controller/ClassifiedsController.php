@@ -53,7 +53,6 @@ class ClassifiedsController extends ClassifiedsAppController {
 		$this->view = "add_edit";
 		
 		if ($this->request->is('post')) {
-			
 			$this->Classified->create();
 			if ($this->Classified->save($this->request->data)) {
 				$this->Session->setFlash(__('The Classified has been saved'));
@@ -61,11 +60,12 @@ class ClassifiedsController extends ClassifiedsAppController {
 			} else {
 				$this->Session->setFlash(__('The Classified could not be saved. Please, try again.'));
 			}
-			
-			if(CakePlugin::loaded('Categories')) {
-				$this->set('categories', $this->Classified->Category->find('list', array('model' => 'Classified')));
-			}
 		}
+
+		if (CakePlugin::loaded('Categories')) {
+			$this->set('categories', $this->Classified->Category->find('list', array('model' => 'Classified')));
+		}
+
 	}
 
 /**
