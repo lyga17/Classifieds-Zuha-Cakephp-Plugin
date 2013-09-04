@@ -23,10 +23,46 @@ class ClassifiedsController extends ClassifiedsAppController {
  */
 	public function index() {
 		$this->Classified->recursive = 0;
-		$this->set('classifieds', $this->paginate());
-		$this->set('Classifieds', $this->Classified->find('all', array(
-			'contain' => array('Category'),
-			)));
+		if(CakePlugin::loaded('Categories')) {
+			$this->set('categories', $this->Classified->Category->find('list', array('conditions' => array('model' => 'Classified'))));
+			$this->paginate['contain'][] = 'Category';
+			if(isset($this->request->query['categories'])) {
+				$categories_param = explode(';', rawurldecode($this->request->query['categories']));
+				$this->set('selected_categories', json_encode($categories_param));
+				$joins = array(
+			           array('table'=>'categorized', 
+			                 'alias' => 'Categorized',
+			                 'type'=>'left',
+			                 'conditions'=> array(
+			                 	'Categorized.foreign_key = Classified.id'
+			           )),
+			           array('table'=>'categories', 
+			                 'alias' => 'Category',
+			                 'type'=>'left',
+			                 'conditions'=> array(
+			                 	'Category.id = Categorized.category_id'
+					   ))
+			         );
+				$this->paginate['joins'] = $joins;
+				$this->paginate['conditions'] = array('Category.name' => $categories_param);
+				$this->paginate['fields'] = array(
+							'DISTINCT Classified.id',
+							'Classified.title',
+							'Classified.description',
+							'Classified.condition',
+							'Classified.payment_terms',
+							'Classified.shipping_terms',
+							'Classified.price',
+							'Classified.city',
+							'Classified.state',
+							'Classified.zip',
+							'Classified.weight',
+							'Classified.posted_date',
+							'Classified.expire_date'
+							);
+			}
+		}
+		$this->set('Classifieds', $this->paginate());
 	}
 
 /**
@@ -40,7 +76,7 @@ class ClassifiedsController extends ClassifiedsAppController {
 		if (!$this->Classified->exists()) {
 			throw new NotFoundException(__('Invalid classified'));
 		}
-		$this->Classified->contain(array('Category'));
+		$this->Classified->contain(array('Category','Creator' => array('Gallery' => 'GalleryThumbnail')));
 		$this->set('classified', $this->Classified->read(null, $id));
 	}
 
