@@ -62,7 +62,7 @@ class ClassifiedsController extends ClassifiedsAppController {
 							);
 			}
 		}
-		$this->set('Classifieds', $this->paginate());
+		$this->set('classifieds', $this->paginate());
 	}
 
 /**
