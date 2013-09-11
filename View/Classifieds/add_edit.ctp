@@ -31,11 +31,11 @@
 		
 		<?php echo $this->Form->input('Classified.city', array('type' => 'text')); ?>
 		
-		<?php echo $this->Form->input('Classified.state', array('type' => 'text')); ?>
+		<?php echo $this->Form->input('Classified.state', array('empty' => '- choose -', 'options' => states())); ?>
 		
 		<?php echo $this->Form->input('Classified.zip', array('type' => 'text')); ?>
 		
-		<?php echo $this->Form->input('Classified.weight', array('type' => 'text')); ?>
+		<?php //echo $this->Form->input('Classified.weight', array('type' => 'text')); ?>
 		
 	<?php echo $this->Form->end('Save'); ?>
 </div>
