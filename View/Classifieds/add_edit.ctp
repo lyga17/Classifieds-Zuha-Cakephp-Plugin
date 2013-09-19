@@ -1,5 +1,4 @@
 <div id="ClassifiedsAddEdit">
-	
 	<?php echo $this->Form->create('Classifieds.Classified'); ?>
 	
 		<?php if(CakePlugin::loaded('Media')) { echo $this->Element('Media.media_selector', array('media' => $this->request->data['Media'], 'multiple' => true)); } ?>
@@ -13,7 +12,6 @@
 		<?php echo $this->Form->input('Classified.posted_date', array('type' => 'datetimepicker')); ?>
 		
 		<?php echo $this->Form->input('Classified.expire_date', array('type' => 'datetimepicker')); ?>
-		
 		<?php
 		if (CakePlugin::loaded('Categories')) {
 			echo $this->Form->label('Categories');	

@@ -62,7 +62,7 @@ class ClassifiedsController extends ClassifiedsAppController {
 							);
 			}
 		}
-		$this->set('classifieds', $this->paginate());
+		$this->set('Classifieds', $this->paginate());
 	}
 
 /**
@@ -113,7 +113,7 @@ class ClassifiedsController extends ClassifiedsAppController {
  * @return void
  */
 	public function edit($id = null) {
-		$this->view = "add_edit";
+		$this->view = 'add_edit';
 		$this->Classified->id = $id;
 		if (!$this->Classified->exists()) {
 			throw new NotFoundException(__('Invalid classified'));
@@ -121,7 +121,7 @@ class ClassifiedsController extends ClassifiedsAppController {
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Classified->save($this->request->data)) {
 				$this->Session->setFlash(__('The classified has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index'));			 
 			} else {
 				$this->Session->setFlash(__('The classified could not be saved. Please, try again.'));
 			}
