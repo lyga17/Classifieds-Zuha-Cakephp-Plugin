@@ -155,4 +155,18 @@ class ClassifiedsController extends ClassifiedsAppController {
 		$this->Session->setFlash(__('Classified was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	public function categories() {
+		if (CakePlugin::loaded('Categories')) {
+			$this->request->data = $this->Classified->Category->find('all', array(
+					'conditions' => array(
+							'model' => 'Classified',
+					),
+					'order' => array('name' => 'ASC')
+			));
+		} else {
+			throw new NotFoundException(__('Invalid URL'));
+			//$this->redirect($this->referer('/'));
+		}
+	}
 }
