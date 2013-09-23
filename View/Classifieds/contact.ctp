@@ -37,6 +37,16 @@
 	<hr />
 	
 	<div class="row-fluid clearfix">
+		<h3>Contact Seller</h3>
+		<?php echo $this->Form->create(); ?>
+		<?php echo $this->Form->input('Classified.your_email'); ?>
+		<?php echo $this->Form->input('Classified.your_message', array('type' => 'textarea')); ?>
+		<?php echo $this->Form->end('Send'); ?>
+	</div>
+	
+	<hr />
+	
+	<div class="row-fluid clearfix">
 		<div class="pull-right">
 			<a href="#" onclick="window.open(
 				'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 

@@ -185,4 +185,41 @@ class ClassifiedsController extends ClassifiedsAppController {
 			//$this->redirect($this->referer('/'));
 		}
 	}
+
+/**
+ * view method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function contact($id = null) {
+		$this->Classified->id = $id;
+		if (!$this->Classified->exists()) {
+			throw new NotFoundException(__('Invalid classified'));
+		}
+		if ($this->request->is('post') || $this->request->is('push')) {
+			$classified = $this->Classified->find('first', array('conditions' => array('Classified.id' => $id), 'contain' => array('Creator')));
+			$email = $classified['Creator']['email'];
+			$subject = __('%s received response on %s', $classified['Classified']['title'], __SYSTEM_SITE_NAME);
+			$message = __('<p>Sender : %s</p><p>%s</p>', $this->request->data['Classified']['your_email'], strip_tags($this->request->data['Classified']['your_message']));
+			
+			if (!empty($email)) {
+				try {
+					$this->__sendMail($email, $subject, $message); 
+					$this->Session->setFlash('Message sent');
+					unset($this->request->data);
+				} catch (Exception $e) {
+					if (Configure::read('debug') > 0) {
+						$this->Session->setFlash($e->getMessage());
+					} else {
+						$this->Session->setFlash('Error, please try again later.');
+					}
+				}
+			} else {
+				$this->Session->setFlash('Creator is not accepting contacts via email.');
+			}
+		}
+		$this->Classified->contain(array('Category','Creator' => array('Gallery' => 'GalleryThumbnail')));
+		$this->set('classified', $this->Classified->read(null, $id));
+	}
 }
