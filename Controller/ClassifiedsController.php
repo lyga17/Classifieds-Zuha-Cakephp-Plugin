@@ -27,8 +27,8 @@ class ClassifiedsController extends ClassifiedsAppController {
 			$this->set('categories', $this->Classified->Category->find('list', array('conditions' => array('model' => 'Classified'))));
 			$this->paginate['contain'][] = 'Category';
 			if(isset($this->request->query['categories'])) {
-				$categories_param = explode(';', rawurldecode($this->request->query['categories']));
-				$this->set('selected_categories', json_encode($categories_param));
+				$categoriesParam = explode(';', rawurldecode($this->request->query['categories']));
+				$this->set('selected_categories', json_encode($categoriesParam));
 				$joins = array(
 			           array('table'=>'categorized', 
 			                 'alias' => 'Categorized',
@@ -44,25 +44,35 @@ class ClassifiedsController extends ClassifiedsAppController {
 					   ))
 			         );
 				$this->paginate['joins'] = $joins;
-				$this->paginate['conditions'] = array('Category.name' => $categories_param);
+				$this->paginate['order']['Classified.is_featured'] = 'DESC';
+				$this->paginate['conditions'] = array('Category.name' => $categoriesParam);
 				$this->paginate['fields'] = array(
-							'DISTINCT Classified.id',
-							'Classified.title',
-							'Classified.description',
-							'Classified.condition',
-							'Classified.payment_terms',
-							'Classified.shipping_terms',
-							'Classified.price',
-							'Classified.city',
-							'Classified.state',
-							'Classified.zip',
-							'Classified.weight',
-							'Classified.posted_date',
-							'Classified.expire_date'
-							);
+					'DISTINCT Classified.id',
+					'Classified.title',
+					'Classified.description',
+					'Classified.condition',
+					'Classified.payment_terms',
+					'Classified.shipping_terms',
+					'Classified.price',
+					'Classified.city',
+					'Classified.state',
+					'Classified.zip',
+					'Classified.weight',
+					'Classified.is_featured',
+					'Classified.created',
+					'Classified.expire_date'
+					);
 			}
 		}
-		$this->set('Classifieds', $this->paginate());
+		if(isset($this->request->query['q'])) {
+			$categoriesParam = explode(';', rawurldecode($this->request->query['categories']));
+			$this->paginate['conditions']['Category.name'] = $categoriesParam;
+			$this->paginate['conditions']['OR'] = array(
+				'Classified.title LIKE' => '%' . $this->request->query['q'] . '%',
+				'Classified.description' => '%' . $this->request->query['q'] . '%'
+			);
+		}
+		$this->set('classifieds', $this->paginate());
 	}
 
 /**
@@ -86,8 +96,6 @@ class ClassifiedsController extends ClassifiedsAppController {
  * @return void
  */
 	public function add() {
-		$this->view = "add_edit";
-		
 		if ($this->request->is('post')) {
 			$this->Classified->create();
 			if ($this->Classified->save($this->request->data)) {
@@ -103,9 +111,18 @@ class ClassifiedsController extends ClassifiedsAppController {
 				'conditions' => array('model' => 'Classified')
 				)));
 		}
-
 	}
-
+	
+/**
+ * post method
+ * 
+ * uses galleries in the view instead of media
+ * 
+ */
+	public function post() {
+		return $this->add();
+	}
+ 
 /**
  * edit method
  *
@@ -113,7 +130,6 @@ class ClassifiedsController extends ClassifiedsAppController {
  * @return void
  */
 	public function edit($id = null) {
-		$this->view = 'add_edit';
 		$this->Classified->id = $id;
 		if (!$this->Classified->exists()) {
 			throw new NotFoundException(__('Invalid classified'));
