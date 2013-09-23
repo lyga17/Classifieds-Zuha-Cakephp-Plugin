@@ -21,7 +21,7 @@ class Classified extends ClassifiedsAppModel {
   * @var array
   */
     public $actsAs = array(
-        'Galleries.Mediable' => array('modelAlias' => 'Phonebook'),
+        'Galleries.Mediable' => array('modelAlias' => 'Classified'),
 		);
 		
 /**
