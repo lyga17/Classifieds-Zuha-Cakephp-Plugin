@@ -5,7 +5,7 @@
 				<?php echo $this->Form->input('Classified.title', array('type' => 'text')); ?>
 			</div>
 			<div class="span4">
-				<?php echo $this->Form->input('Classified.expire_date', array('label' => 'Expiration Date', 'type' => 'datepicker')); ?>
+				<?php echo $this->Form->input('Classified.expire_date', array('label' => 'Expiration Date', 'type' => 'datepicker', 'class' => 'input-medium')); ?>
 			</div>
 			<div class="span4">
 				<?php echo $this->Form->input('GalleryImage.filename', array('type' => 'file')); ?>
@@ -34,14 +34,14 @@
 		<div class="row-fluid">
 			<div class="span3">
 				<?php if (CakePlugin::loaded('Categories')) : ?>
-					<?php echo $this->Form->input('Category.Category', array('type' => 'select', 'options' => $categories, 'multiple' => 'checkbox', 'limit' => 3)); ?>
+					<?php echo $this->Form->input('Category.Category', array('type' => 'radio', 'legend' => false,'class' => 'input-medium', 'options' => $categories, 'limit' => 3)); ?>
 				<?php endif; ?>
 			</div>
 			<div class="span3">				
 				<?php echo $this->Form->input('Classified.city', array('type' => 'text')); ?>
 			</div>
 			<div class="span3">				
-				<?php echo $this->Form->input('Classified.state', array('empty' => '- choose -', 'options' => states())); ?>
+				<?php echo $this->Form->input('Classified.state', array('empty' => '- choose -', 'options' => states(), 'class' => 'input-medium')); ?>
 			</div>
 			<div class="span3">			
 				<?php echo $this->Form->input('Classified.zip', array('type' => 'text')); ?>
