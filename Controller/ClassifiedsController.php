@@ -107,9 +107,9 @@ class ClassifiedsController extends ClassifiedsAppController {
 		}
 
 		if (CakePlugin::loaded('Categories')) {
-			$this->set('categories', $this->Classified->Category->find('list', array(
+			$this->set('categories', $this->Classified->Category->find('all', array(
 				'conditions' => array('model' => 'Classified')
-				)));
+			)));
 		}
 	}
 	
