@@ -187,7 +187,7 @@ class ClassifiedsController extends ClassifiedsAppController {
 	}
 
 /**
- * view method
+ * contact method
  *
  * @param string $id
  * @return void
