@@ -40,13 +40,14 @@
 <?php endif; ?>
 </div>
 
+<?php echo $this->Element('paging'); ?>
+
 
 <script type="text/javascript">
 	(function($) {
     	$('#searchFrom').submit(function(){
             $.get('/phonebooks/phonebooks/search.json', {search: $('#SearchInput').val()}, function(json) {
             	var html = '<h2 style="font-size: 18px">Participating Locations for <span style="color: red; font-style: italic;">'+$('#SearchInput').val()+'</span></h2><p>We found '+json.locations.length+' centers within distance of 50 miles</p><table class="locations" cellpadding="0" cellspacing="0"><thead><tr><th class="name">MATHNASIUM CENTER NAME</th><th class="contact"></th></tr></thead><tbody>';
-                
                 
                 for(i=0 ; i < json.locations.length ; i++ ) {
                     html += '<tr><td width="320"><b><a href="http://' + json.locations[i].Phonebook.website + '" class="center_name" target="_blank">' + json.locations[i].Phonebook.name + '</a></b><br><br>' + json.locations[i].Phonebook.address_1 + '<br>' + json.locations[i].Phonebook.city + ',' + json.locations[i].Phonebook.state + ' ' + json.locations[i].Phonebook.zip + '          <br>Distance: ' + json.locations[i].Phonebook.distance + ' Miles<br><br><a href="' + json.locations[i].Phonebook.mapurl + '" target="_blank">Map This Address</a><br><br><a href="http://' + json.locations[i].Phonebook.website + '" target="_blank">' + json.locations[i].Phonebook.website + '</a></td><td><div>P: ' + json.locations[i].Phonebook.phone + '<br />';

@@ -36,7 +36,7 @@ class ClassifiedsSchema extends CakeSchema {
 		'posted_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'comment' => 'Posted Date'),
 		'expire_date' => array('type' => 'datetime', 'null' => false, 'default' => NULL, 'comment' => 'Expiration Date'),
 		'creator_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'collate' => 'utf8_general_ci', 'comment' => 'Creator', 'charset' => 'utf8'),
-		'is_virtual' => array('type' => 'boolean', 'null' => true, 'default' => NULL),
+		'is_featured' => array('type' => 'boolean', 'null' => false, 'default' => 0),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL, 'comment' => 'Created Date'),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => NULL, 'comment' => 'Modified Date'),
 		'data' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => 'Data Column', 'charset' => 'utf8'),
